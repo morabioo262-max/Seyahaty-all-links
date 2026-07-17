@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEYAHATY | سياحتي</title>
+    
+    <!-- استدعاء خطوط جوجل للغة العربية والإنجليزية -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- استدعاء مكتبة الأيقونات Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #0f4c81;       /* أزرق ملكي فاخر */
+            --secondary: #1d70b8;     /* أزرق حيوي */
+            --accent: #d4af37;        /* لمسة ذهبية للمظهر العالمي */
+            --bg-light: #f8fafc;      /* خلفية مريحة */
+            --text-main: #1e293b;     /* لون النصوص الرئيسي */
+            --text-muted: #64748b;    /* لون النصوص الثانوية */
+            --emergency: #e11d48;     /* لون أحمر مميز لزر خدمة العملاء المنفصل */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* --- الصفحة الرئيسية --- */
+        .home {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at top right, var(--secondary), var(--primary));
+            padding: 20px;
+            position: relative;
+        }
+
+        .home::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 30px;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            z-index: 1;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .logo-img {
+            max-width: 130px;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px auto;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+        }
+
+        .logo {
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .container h2 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .container p {
+            color: var(--text-muted);
+            margin-bottom: 35px;
+            font-size: 16px;
+        }
+
+        .btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(29, 112, 184, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(29, 112, 184, 0.4);
+        }
+
+        /* --- لوحة التحكم والروابط --- */
+        .dashboard {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        header h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* الحاوية الخارجية للأزرار للتحكم بالتنسيق العمودي */
+        .controls-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: 0 auto 50px auto;
+            max-width: 320px;
+            z-index: 100;
+            position: relative;
+        }
+
+        /* --- نظام القائمة المنسدلة الموحدة (الزر الواحد) --- */
+        .menu-container {
+            position: relative;
+            width: 100%;
+            text-align: center;
+        }
+
+        .main-menu-btn {
+            width: 100%;
+            padding: 15px 25px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 25px rgba(15, 76, 129, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .main-menu-btn:hover {
+            background: var(--secondary);
+            box-shadow: 0 12px 30px rgba(29, 112, 184, 0.4);
+        }
+
+        .main-menu-btn i.arrow-icon {
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        /* عندما تكون القائمة مفتوحة، نلف السهم */
+        .main-menu-btn.open i.arrow-icon {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 110%;
+            left: 0;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            border: 1px solid #e2e8f0;
+            padding: 10px;
+            display: none; /* مخفية افتراضياً */
+            flex-direction: column;
+            gap: 5px;
+            animation: slideDown 0.3s ease forwards;
+            z-index: 110;
+        }
+
+        .dropdown-menu.show {
+            display: flex;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-item {
+            width: 100%;
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            text-align: right;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-main);
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-item i {
+            color: var(--secondary);
+            width: 24px;
+            font-size: 18px;
+        }
+
+        .dropdown-item:hover {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+
+        .dropdown-item.active {
+            background: rgba(15, 76, 129, 0.1);
+            color: var(--primary);
+            border-right: 4px solid var(--accent);
+        }
+
+        /* --- تصميم زر Exacall المنفصل والمميز (رابط) --- */
+        .exacall-special-btn {
+            width: 100%;
+            padding: 15px 25px;
+            background: linear-gradient(135deg, var(--emergency), #be123c);
+            color: #fff;
+            text-decoration: none; /* إلغاء التسطير تحت الرابط */
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 25px rgba(225, 29, 72, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .exacall-special-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(225, 29, 72, 0.5);
+            filter: brightness(1.1);
+        }
+
+        /* حاويات المحتوى */
+        .tab-content {
+            display: none; /* مخفي افتراضياً */
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .tab-content.active {
+            display: block; /* يظهر التبويب النشط فقط */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* تصميم الكروت الجماعي */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 10px;
+        }
+
+        .card {
+            background: white;
+            padding: 40px 30px;
+            text-align: center;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(15, 76, 129, 0.12);
+            border-color: var(--secondary);
+        }
+
+        .icon {
+            font-size: 45px;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .icon {
+            transform: scale(1.1);
+            color: var(--accent);
+        }
+
+        .name {
+            font-size: 19px;
+            font-weight: 600;
+        }
+
+        .card p {
+            margin-top: 10px;
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        /* تنسيقات مخصصة جداً لقسم About مع خلفية مكة المكرمة والكعبة */
+        .about-wrapper {
+            position: relative;
+            border-radius: 30px;
+            overflow: hidden;
+            padding: 60px 40px;
+            background: url('https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        /* طبقة حماية داكنة وشفافة تدمج الفخامة وتوضح الخطوط */
+        .about-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(15, 76, 129, 0.92), rgba(0, 0, 0, 0.85));
+            z-index: 1;
+        }
+
+        .about-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            z-index: 2;
+        }
+
+        .about-card-hero {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+            padding: 40px;
+            border-radius: 24px;
+            border-right: 6px solid var(--accent);
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        .about-card-hero h2 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+        }
+
+        .about-card-hero p {
+            color: #ffffff;
+            font-size: 17px;
+            line-height: 1.9;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .about-sub-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .about-sub-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--accent);
+        }
+
+        .about-sub-card h3 {
+            color: #ffffff;
+            margin-bottom: 12px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 8px;
+            width: fit-content;
+        }
+
+        .about-sub-card p {
+            color: #f1f5f9;
+            font-size: 15.5px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            width: 220px;
+            margin: 60px auto 0 auto;
+            padding: 12px;
+            background: #fff;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            border: 1px solid #cbd5e1;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--text-main);
+            color: #fff;
+            border-color: var(--text-main);
+        }
+
+        .center-wrapper {
+            text-align: center;
+        }
+
+        footer {
+            margin-top: 80px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الصفحة الرئيسية -->
+    <section class="home">
+        <div class="container">
+            <img src="2.png" alt="لوجو سياحتي" class="logo-img">
+            <div class="logo">SEYAHATY</div>
+            <h2>شركة سياحتي للسفر والسياحة</h2>
+            <p>مرحباً بك في تطبيق سياحتي الرقمي</p>
+            
+            <a href="#dashboard" class="btn">
+                دخول المنصة <i class="fa-solid fa-arrow-left"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- لوحة التحكم المقسمة إلى صفحات داخلية -->
+    <section class="dashboard" id="dashboard">
+        <header>
+            <h1>بوابة الخدمات الذكية</h1>
+        </header>
+
+        <!-- الحاوية المجمعة للأزرار للتحكم المالي المنفصل -->
+        <div class="controls-wrapper">
+            <!-- نظام القائمة الموحدة الفاخرة (الزر الواحد) -->
+            <div class="menu-container">
+                <button class="main-menu-btn" id="menuBtn" onclick="toggleMenu()">
+                    <i class="fa-solid fa-bars"></i>
+                    <span id="menuLabel">بوابات الشركات B2B</span>
+                    <i class="fa-solid fa-chevron-down arrow-icon"></i>
+                </button>
+                
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <button class="dropdown-item active" id="item-b2b-links" onclick="switchTab('b2b-links', 'بوابات الشركات B2B', this)">
+                        <i class="fa-solid fa-briefcase"></i> بوابات الشركات B2B
+                    </button>
+                    <button class="dropdown-item" id="item-flights" onclick="switchTab('flights', 'خدمات الطيران العالمية', this)">
+                        <i class="fa-solid fa-plane"></i> خدمات الطيران العالمية
+                    </button>
+                    <button class="dropdown-item" id="item-hotels-weather" onclick="switchTab('hotels-weather', 'الفنادق وأدوات الدعم', this)">
+                        <i class="fa-solid fa-hotel"></i> الفنادق وأدوات الدعم
+                    </button>
+                    <button class="dropdown-item" id="item-travel-tools" onclick="switchTab('travel-tools', 'أدوات المسافر الذكية', this)">
+                        <i class="fa-solid fa-screwdriver-wrench"></i> أدوات المسافر الذكية
+                    </button>
+                    <button class="dropdown-item" id="item-company-contact" onclick="switchTab('company-contact', 'تواصل معنا والعنوان', this)">
+                        <i class="fa-solid fa-address-book"></i> تواصل معنا والعنوان
+                    </button>
+                    <button class="dropdown-item" id="item-about-company" onclick="switchTab('about-company', 'About | عن الشركة', this)">
+                        <i class="fa-solid fa-circle-info"></i> About | عن الشركة
+                    </button>
+                </div>
+            </div>
+
+            <!-- زر Exacall المرتبط باللينك مباشرة كعلامة تبويب جديدة -->
+            <a href="https://phonex4.exacall.com/webrtc/login" class="exacall-special-btn" target="_blank" onclick="closeMenuOnly()">
+                <i class="fa-solid fa-headset"></i>
+                <span>خدمة العملاء | Exacall</span>
+            </a>
+        </div>
+
+        <!-- ================= الصفحة الأولى: بوابات B2B ================= -->
+        <div id="b2b-links" class="tab-content active">
+            <div class="cards-grid">
+                <a href="https://reseller.billbed.com/reseller/home/" class="card" target="_blank">
+                    <div class="icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <div class="name">BILLBED</div>
+                </a>
+                <a href="https://new.itrip-online.com/?error=FinalCountdown" class="card" target="_blank">
+                    <div class="icon"><i class="fa-solid fa-plane-departure"></i></div>
+                    <div class="name">iTrip</div>
+                </a>
+                <a href="https://www.smartbookingsa.com/b2b/login" class="card" target="_blank">
+                    <div class="icon"><i class="fa-solid fa-building-shield"></i></div>
+                    <div class="name">Smart Booking</div>
+                </a>
+                <a href="https://www.tboholidays.com/" class="card" target="_blank">
+                    <div class="icon"><i class="fa-solid fa-globe"></i></div>
+                    <div class="name">TBO Holidays</div>
+                </a>
+                <a href="https://b2b.beta-travel.net/NewSearch/Hotel" class="card" target="_blank">
+                    <div class="icon"><i class="fa-solid fa-suitcase-rolling"></i></div>
+                    <div class="name">Beta Travel</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ================= الصفحة الثانية: الطيران ================= -->
+        <div id="flights" class="tab-content">
+            <div class="cards-grid">
+                <a href="https://www.skyscanner.com" class="card" target="_blank">
+                    <div class="icon"><i class="fa-solid fa-ticket"></i></div>
+                    <div class="name">مقارنة الطيران | Skyscanner</div>
+                </a>
+                <a href="https://www.flightradar24.com" class="card" target="_blank">
+                    <div class="icon"><i class="fa-solid fa-map-location-dot"></i></div>
+                    <div class="name">تتبع الرحلات | FlightRadar24</div>
+                </a>
+                <a href="https://www.kiwi.com" class="card" target="_blank">
+                    <div class="icon"><i class="fa-solid fa-compass"></i></div>
+                    <div class="name">رحلات مرنة | Kiwi.com</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ================= الصفحة الثالثة: الفنادق والطقس ================= -->
+        <div id="hotels-weather" class="tab-content">
+            <div class="cards-grid">
+                <a href="https://www.booking.com" class="card" target="_blank">
+                    <div class="icon"><i class="fa-solid fa-bed"></i></div>
+                    <div class="name">حجز فنادق | Booking.com</div>
+                </a>
+                <a href="https://www.tripadvisor.com" class="card" target="_blank">
+                    <div class="icon"><i class="fa-solid fa-star"></i></div>
+                    <div class="name">تقييمات | TripAdvisor</div>
+                </a>
+                <a href="https://www.accuweather.com" class="card" target="_blank">
+                    <div class="icon"><i class="fa-solid fa-cloud-sun-rain"></i></div>
+                    <div class="name">أحوال الجو | AccuWeather</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ================= الصفحة الرابعة: أدوات المسافر والخدمات الذكية ================= -->
+        <div id="travel-tools" class="tab-content">
+            <div class="cards-grid">
+                <a href="https://www.xe.com" class="card" target="_blank">
+                    <div class="icon"><i class="fa-solid fa-money-bill-transfer"></i></div>
+                    <div class="name">أسعار العملات | XE</div>
+                </a>
+                <a href="https://www.google.com/maps" class="card" target="_blank">
+                    <div class="icon"><i class="fa-solid fa-map-pinned"></i></div>
+                    <div class="name">الخرائط | Google Maps</div>
+                </a>
+                <a href="https://www.ivisa.com" class="card" target="_blank">
+                    <div class="icon"><i class="fa-solid fa-passport"></i></div>
+                    <div class="name">تأشيرات السفر | iVisa</div>
+                </a>
+                <a href="https://www.rentalcars.com" class="card" target="_blank">
+                    <div class="icon"><i class="fa-solid fa-car"></i></div>
+                    <div class="name">تأجير السيارات | Rentalcars</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ================= الصفحة الخامسة: بيانات الشركة والتواصل ================= -->
+        <div id="company-contact" class="tab-content">
+            <div class="cards-grid">
+                <a href="tel:+966920022916" class="card">
+                    <div class="icon"><i class="fa-solid fa-phone-volume"></i></div>
+                    <div class="name">رقم الهاتف الموحد</div>
+                    <p dir="ltr">(+966) 920022916</p>
+                </a>
+                <a href="https://www.google.com/maps/search/?api=1&query=مكة+حي+الخالدية" class="card" target="_blank">
+                    <div class="icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <div class="name">مقر الشركة الرئيسي</div>
+                    <p>مكة المكرمة - حي الخالدية</p>
+                </a>
+                <a href="https://wa.me/966920022916" class="card" target="_blank">
+                    <div class="icon"><i class="fa-brands fa-whatsapp"></i></div>
+                    <div class="name">تواصل سريع عبر الواتساب</div>
+                    <p>المحادثة الفورية للدعم الفني</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- ================= الصفحة السادسة: About | عن الشركة ================= -->
+        <div id="about-company" class="tab-content">
+            <div class="about-wrapper">
+                <div class="about-container">
+                    <div class="about-card-hero">
+                        <h2><i class="fa-solid fa-kaaba"></i> من نحن؟</h2>
+                        <p>
+                            شركة سياحتي هي شركة سعودية رائدة متخصصة في مجال السياحة والسفر، بإرث يمتد لأكثر من عقد من الزمن. لقد أسسنا أنفسنا كاسم موثوق به في مجال السياحة والسفر، ونحن ملتزمون بتقديم خدمات استثنائية وخلق تجارب سياحية لا تُنسى لعملائنا الكرام.
+                        </p>
+                    </div>
+
+                    <div class="about-grid">
+                        <div class="about-sub-card">
+                            <h3><i class="fa-solid fa-gem"></i> رؤيتنا وأهدافنا</h3>
+                            <p>
+                                نعمل على خدمة السياح بشكل عام والسائحين السعوديين بشكل خاص ليتمتعوا بأعلى مستويات الرفاهية، ونسعى لجعل السفر أسهل وأكثر فعالية من حيث التكلفة لعملائنا، نتيجة لقدراتنا الواسعة في صناعة السفر ومن خلال رؤيتنا العميقة.
+                            </p>
+                        </div>
+
+                        <div class="about-sub-card">
+                            <h3><i class="fa-solid fa-handshake"></i> نهجنا السياحي</h3>
+                            <p>
+                                يتمثل نهجنا السياحي في فهم أهداف عملائنا بشكل كامل على المستويين الاستراتيجي والتكتيكي. يفخر فريقنا بامتلاكه المهارات التشغيلية الإضافية للتفوق في تنفيذ المشاريع المتعلقة بالسفر والارتقاء بها لمعايير عالمية.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- زر العودة -->
+        <div class="center-wrapper">
+            <a href="#" class="back-btn">
+                <i class="fa-solid fa-house"></i> الرجوع للرئيسية
+            </a>
+        </div>
+
+        <footer>
+            © Eng MR - جميع الحقوق محفوظة لشركة سياحتي
+        </footer>
+    </section>
+
+    <!-- كود الجافا سكريبت الذكي للتحكم بالقائمة التفاعلية والتبديل -->
+    <script>
+        // دالة لفتح وإغلاق القائمة المنسدلة
+        function toggleMenu() {
+            const menu = document.getElementById('dropdownMenu');
+            const btn = document.getElementById('menuBtn');
+            menu.classList.toggle('show');
+            btn.classList.toggle('open');
+        }
+
+        // دالة للتبديل بين الصفحات وتحديث اسم الزر الرئيسي
+        function switchTab(tabId, tabName, element) {
+            // 1. إخفاء كافة محتويات التبويبات
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // 2. إظهار التبويب الذي تم اختياره
+            document.getElementById(tabId).classList.add('active');
+
+            // 3. تحديث النص الظاهر على الزر الرئيسي ليعبر عن الصفحة الحالية
+            document.getElementById('menuLabel').innerText = tabName;
+
+            // 4. إزالة خاصية التفعيل (Active) من العناصر الأخرى وإضافتها للعنصر الحالي بالقائمة
+            const items = document.querySelectorAll('.dropdown-item');
+            items.forEach(item => item.classList.remove('active'));
+            
+            if(element) {
+                element.classList.add('active');
+            }
+
+            // 5. إغلاق القائمة تلقائياً بعد الاختيار
+            document.getElementById('dropdownMenu').classList.remove('show');
+            document.getElementById('menuBtn').classList.remove('open');
+        }
+
+        // دالة لإغلاق القائمة فقط في حال تم الضغط على زر الاتصال الخارجي
+        function closeMenuOnly() {
+            document.getElementById('dropdownMenu').classList.remove('show');
+            document.getElementById('menuBtn').classList.remove('open');
+        }
+
+        // إغلاق القائمة تلقائياً إذا ضغط المستخدم في أي مكان خارج الزر والقائمة
+        window.onclick = function(event) {
+            if (!event.target.matches('#menuBtn') && !event.target.matches('.main-menu-btn') && !event.target.closest('.main-menu-btn')) {
+                const menu = document.getElementById('dropdownMenu');
+                const btn = document.getElementById('menuBtn');
+                if (menu && menu.classList.contains('show')) {
+                    menu.classList.remove('show');
+                    btn.classList.remove('open');
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
